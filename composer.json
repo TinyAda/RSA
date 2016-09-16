@@ -1,0 +1,37 @@
+{
+  "name": "tinyada/rsa",
+  "description": "RSA Package for Laravel5",
+  "keywords": [
+    "RSA",
+    "Laravel",
+    "tinyada"
+  ],
+  "license": "MIT",
+  "support": {
+    "email": "mradxz@gmail.com"
+  },
+  "authors": [
+    {
+      "name": "Mradxz",
+      "email": "mradxz@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "laravel/framework": "5.0.*|5.1.*|5.2.*|5.3.*"
+  },
+  "require-dev": {
+  },
+  "autoload": {
+    "psr-4": {
+      "TinyAda\\RSA\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.1-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
