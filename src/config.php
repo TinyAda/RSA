@@ -15,31 +15,22 @@ return [
 
 	/*
 	|--------------------------------------------------------------------------
-	| Config Geetest Id
+	| 设置私钥
 	|--------------------------------------------------------------------------
-	|
-	| Here you can config your yunpian api key from yunpian provided.
-	|
 	*/
 	'private_exp' => env('RSA_PRIVATE_EXP'),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Config Geetest Key
+	| 设置公钥
 	|--------------------------------------------------------------------------
-	|
-	| Here you can config your yunpian api key from yunpian provided.
-	|
 	*/
 	'public_exp' => env('RSA_PUBLIC_EXP'),
 
 	/*
 	|--------------------------------------------------------------------------
-	| Config Geetest URL
+	| 设置模数
 	|--------------------------------------------------------------------------
-	|
-	| Here you can config your geetest url for ajax validation.
-	|
 	*/
 	'modulus' => env('RSA_MODULUS'),
 
