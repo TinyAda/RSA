@@ -4,15 +4,26 @@ use Illuminate\Support\Facades\Config;
 
 class RSALib
 {   
-
+    /**
+     * [私钥]
+     * @var [type]
+     */
     public $private_exp;
 
+    /**
+     * [私钥]
+     * @var [type]
+     */
     public $public_exp;
 
+    /**
+     * [模数]
+     * @var [type]
+     */
     public $modulus;
 
     /**
-     * RsaLib constructor.
+     * RSALib constructor.
      */
     public function __construct()
     {
@@ -21,8 +32,15 @@ class RSALib
         $this->modulus = Config::get('rsa.modulus');
     }
 
-    # 依赖 php_gmp.dll
-    # 默认的效率比较低
+    /**
+     * 模乘 ($p^$q)mod($r)
+     * 依赖 php_gmp.dll
+     * 
+     * @param  string base
+     * @param  string 指数
+     * @param  string 取模
+     * @return string
+     */
     function powMod($p, $q, $r)
     {
         if(function_exists('gmp_powm')){
@@ -67,6 +85,12 @@ class RSALib
         return $result;
     }
 
+    /**
+     * 十进制转十六进制
+     * 
+     * @param  string 十进制数字字符串
+     * @return string
+     */
     function dec2Hex($number)
     {
         $hexvalues = array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
@@ -79,6 +103,12 @@ class RSALib
         return $hexval;
     }
 
+    /**
+     * 十六进制字符串转十进制字符串
+     * 
+     * @param  string 十六进制字符串
+     * @return string 
+     */
     function hex2Dec($number)
     {
         $decvalues = array('0'=>'0','1'=>'1','2'=>'2','3' => '3', '4' => '4', '5' => '5','6' => '6', '7' => '7', '8' => '8','9' => '9', 'A' => '10', 'B' => '11','C' => '12', 'D' => '13', 'E' => '14','F' => '15');
@@ -91,7 +121,13 @@ class RSALib
         return $decval;
     }
 
-    function str2Hex($string)//字符串转十六进制修复回车换行问题
+    /**
+     * 字符串转十六进制
+     * 
+     * @param  string 字符串
+     * @return string
+     */
+    function str2Hex($string)
     { 
         $hex="";
         for($i=0;$i<strlen($string);$i++){
@@ -101,6 +137,12 @@ class RSALib
         return $hex;
     }
 
+    /**
+     * 十六进制转成字符串
+     * 
+     * @param  string 十六进制字符串
+     * @return string
+     */
     function hex2Str($hex)//十六进制转字符串
     {   
         $string=""; 
@@ -109,41 +151,53 @@ class RSALib
         return  $string;
     }
 
+    /**
+     * gbk转utf8
+     * 
+     * @param  string gbk编码的字符串
+     * @return string
+     */
     function gbk2Utf8($str){
         return mb_convert_encoding($str, 'utf-8', 'gbk');
     }
-     
+    
+    /**
+     * utf8转gbk
+     * 
+     * @param  string utf8编码的字符串
+     * @return string 
+     */
     function utf82Gbk($str){
         return mb_convert_encoding($str, 'gbk', 'utf-8');
     }
 
-    //解密函数
-    /*
-        密文
-        公钥
-        模数
-        返回 解密后的
-        依赖 php_gmp.dll
-        8个bits = 1byte
-    */
-    function decrypt($message)
+    /**
+     * rsa解密
+     * 
+     * @param  string 待解密的密文
+     * @return string
+     */
+    function decrypt($ciphertext)
     {
-        $decrypted = $this->powMod($this->hex2Dec($message),$this->hex2Dec($this->private_exp),$this->hex2Dec($this->modulus));
+        $decrypted = $this->powMod($this->hex2Dec($ciphertext),$this->hex2Dec($this->private_exp),$this->hex2Dec($this->modulus));
         return $this->gbk2Utf8($this->hex2Str($this->dec2Hex($decrypted)));
     }
 
-    /*
-        加密函数
-    */
-    function encrypt($message)
+    /**
+     * rsa加密
+     * 
+     * @param  string 明文
+     * @return string 十六进制 
+     */
+    function encrypt($plaintext)
     {
-        $message = $this->utf82Gbk($message);
-        $message = $this->hex2Dec($this->str2Hex($message));
+        $plaintext = $this->utf82Gbk($plaintext);
+        $plaintext = $this->hex2Dec($this->str2Hex($plaintext));
         $modulus = $this->hex2Dec($this->modulus);
-        if($message > $modulus){
+        if($plaintext > $modulus){
             throw new \Exception("明文不能大于模数！！！");
         }
-        $encrypted = $this->powMod($message, $this->hex2Dec($this->public_exp),$modulus);
+        $encrypted = $this->powMod($plaintext, $this->hex2Dec($this->public_exp),$modulus);
         return $this->dec2hex($encrypted);
     }
 
