@@ -128,7 +128,7 @@ class RSALib
     */
     function decrypt($message)
     {
-        $decrypted = $this->powMod($this->hex2Dec($message),$this->hex2Dec($this->public_exp),$this->hex2Dec($this->modulus));
+        $decrypted = $this->powMod($this->hex2Dec($message),$this->hex2Dec($this->private_exp),$this->hex2Dec($this->modulus));
         return $this->gbk2Utf8($this->hex2Str($this->dec2Hex($decrypted)));
     }
 
@@ -143,7 +143,7 @@ class RSALib
         if($message > $modulus){
             throw new \Exception("明文不能大于模数！！！");
         }
-        $encrypted = $this->powMod($message, $this->hex2Dec($this->private_exp),$modulus);
+        $encrypted = $this->powMod($message, $this->hex2Dec($this->public_exp),$modulus);
         return $this->dec2hex($encrypted);
     }
 
