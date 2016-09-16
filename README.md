@@ -65,7 +65,7 @@ RSA::decrypt($ciphertext);
 
 ## Contribution
 
-If you find something wrong with this package, you can send an email to `cqc@cuiqingcai.com`
+If you find something wrong with this package, you can send an email to `mradxz@gmail.com`
 
 Or just send a pull request to this repository. 
 
