@@ -37,7 +37,7 @@ And you can register the RSA Facade in the `aliases` of `config/app.php` if you 
 To get started, you need to publish all vendor assets using following command.
 
 ```
-$ php artisan vendor:publish
+$ php artisan vendor:publish --provider="TinyAda\RSA\RSAServiceProvider"
 ```
 
 This will create a config file named `config/rsa.php` which you can configure RSA as you like.

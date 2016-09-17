@@ -173,7 +173,7 @@ class RSALib
 
     /**
      * 设置公钥私钥和模数
-     * @param array $key [description]
+     * @param array $arr [description]
      */
     function setKey(array $arr)
     {
