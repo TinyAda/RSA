@@ -172,6 +172,17 @@ class RSALib
     }
 
     /**
+     * 设置公钥私钥和模数
+     * @param array $key [description]
+     */
+    function setKey(array $arr)
+    {
+        foreach ($arr as $key => $value) {
+            $this->$$key = $value;
+        }
+    }
+
+    /**
      * rsa解密
      * 
      * @param  string 待解密的密文
