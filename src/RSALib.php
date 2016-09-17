@@ -178,7 +178,7 @@ class RSALib
     function setKey(array $arr)
     {
         foreach ($arr as $key => $value) {
-            $this->$$key = $value;
+            $this->$key = $value;
         }
     }
 
