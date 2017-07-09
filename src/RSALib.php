@@ -118,7 +118,7 @@ class RSALib
         {
         $decval = bcadd(bcmul(bcpow('16',$i,0),$decvalues[$number{$i}]), $decval);
         }
-        return $decval;
+        return strtok($decval, ".");
     }
 
     /**
